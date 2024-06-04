@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz-It</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+</head>
+
+<body>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-lg bg-light navbar-dark-font py-2 fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="static/img/1.jpeg" alt="Quiz-It" class="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#service">Our Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#feedback">Feedbacks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-dark" href="{{ url_for('register') }}">Sign Up</a>
+                    </li>
+                </ul>
+                <form class="d-flex subscribe" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Email ..." aria-label="Search">
+                    <button class="btn btn-dark" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Us -->
+    <section id="about" class="bg-dark-bg text-light-font p-5 p-lg-0 pt-lg-5 text-sm-start curve-edge">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <div class="mx-5">
+                    <h1 class="text-warning no-wrap"><i class="bi bi-people-fill"></i> Who Are We?</h1>
+                    <p class="lead justify">
+                        Welcome to Quiz-It, your ultimate destination for testing and enhancing your knowledge!
+                        At Quiz-It, we believe in the
+                        power of learning and the joy of discovery. Our mission is to provide a platform where users can
+                        effortlessly transform
+                        their course materials into engaging multiple-choice quizzes. Whether it's a PDF, DOC, or any
+                        other format, our web
+                        application seamlessly converts your documents into interactive quizzes, making learning both
+                        effective and fun.
+                    </p>
+                </div>
+                <img class="img-fluid w-50 d-none d-sm-block rounded" src="static/img/body/question2.png"
+                    alt="Favourite" width="400" height="400">
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Service -->
+    <section id="service" class="bg-dark-bg text-light-font p-5 p-lg-0 pt-lg-5 text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-evenly">
+                <img class="img-fluid w-50 d-none d-sm-block rounded" src="static/img/body/seeBeyond.png"
+                    alt="Favourite">
+                <div class="m-5">
+                    <h1 class="text-warning no-wrap"><i class="bi bi-tools"></i> What We Do </h1>
+                    <p class="lead my-4 justify">
+                        At Quiz-It, we transform your course materials into interactive multiple-choice quizzes, making
+                        studying more
+                        engaging and effective. Our platform allows you to upload PDFs, DOC files, and other formats,
+                        which are then converted
+                        into custom quizzes tailored to your needs. With features like immediate feedback, performance
+                        tracking, and detailed
+                        analytics, Quiz-It helps you identify strengths and areas for improvement, ensuring a more
+                        targeted and efficient
+                        learning experience. </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us -->
+    <section id="join" class="bg-dark-bg text-light-font p-5 p-lg-0 pt-lg-5 text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <div class="m-5">
+                    <h1 class="text-warning no-wrap"><i class="bi bi-person-plus-fill"></i> Just A Button Away</h1>
+                    <p class="lead my-4 justify">
+                        Join us today to experience a smarter, more effective way to study. Let Quiz-It help you
+                        identify your strengths, target
+                        your weaknesses, and make the most of your educational journey. With our user-friendly interface
+                        and flexible access,
+                        you can learn at your own pace, anytime and anywhere. Trust us to be your partner in achieving
+                        academic excellence.
+                    </p>
+                    <a class="btn btn-warning btn-lg" href="#" role="button">Sign Up</a>
+                </div>
+                <img class="img-fluid w-50 d-none d-sm-block rounded" src="static/img/body/one-click.png"
+                    alt="Favourite">
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedbacks -->
+    <section id="feedback" class="bg-dark-bg text-light-font p-5 p-lg-0 pt-lg-5 text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <img class="img-fluid w-50 d-none d-sm-block rounded" src="static/img/body/rating.png" alt="Favourite">
+                <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
+                    <h1 class="text-warning no-wrap justify"><i class="bi bi-reply-fill"></i> Customers' Feedbacks</h1>
+                    <div class="carousel-inner">
+                        <!-- Feedback 1 -->
+                        <div class="carousel-item active px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">Quiz-It has completely changed the way I study! I love how easy
+                                it is to upload my course materials and instantly
+                                receive personalized quizzes. The platform is incredibly user-friendly, and the quizzes
+                                are tailored perfectly to the content I need to master. This innovative approach has
+                                made my study sessions more efficient
+                                and effective.
+                                <strong>&#8212; &#8220; <span>Qk
+                                        Zalmi</span> &#8221;
+                                    &nbsp; <span class="fi fi-pk"></span></strong>
+                            </p>
+                        </div>
+                        <!-- Feedback 2 -->
+                        <div class="carousel-item px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">Thanks to Quiz-It, I can now track my progress and focus on
+                                areas where I need improvement. It's like having a personal
+                                tutor at my fingertips! The detailed performance analytics provide valuable insights,
+                                helping me to hone my skills and
+                                stay on top of my coursework. I feel more confident and prepared for exams than ever
+                                before.
+                                <strong>&#8212; &#8220; <span>Edgar Smith</span> &#8221;
+                                    &nbsp; <span class="fi fi-de"></span></strong>
+                            </p>
+                        </div>
+                        <!-- Feedback 3 -->
+                        <div class="carousel-item px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">The quizzes generated by Quiz-It are not only comprehensive but
+                                also fun to take. Learning has never been this engaging!
+                                The variety of question types and interactive features keep me motivated and interested,
+                                making studying feel less like
+                                a chore and more like an enjoyable challenge.
+                                <strong>&#8212; &#8220; Adeyemi
+                                    Taofeeq
+                                    &#8221;
+                                    &nbsp; <span class="fi fi-gb"></span></strong>
+                            </p>
+                        </div>
+                        <!-- Feedback 4 -->
+                        <div class="carousel-item px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">Quiz-It's performance analytics have been incredibly helpful in
+                                guiding my study sessions. I feel more confident and
+                                prepared for exams than ever before. The detailed feedback and progress reports allow me
+                                to identify my strengths and
+                                weaknesses, enabling me to focus my efforts where they are needed most.
+                                <strong>&#8212; &#8220; <span>Suzanna
+                                        Polyanska</span>
+                                    &#8221;
+                                    &nbsp; <span class="fi fi-my"></span></strong>
+                            </p>
+                        </div>
+                        <!-- Feedback 5 -->
+                        <div class="carousel-item px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">I highly recommend Quiz-It to anyone looking to enhance their
+                                learning experience. It's a game-changer! The platform's
+                                ability to transform course materials into effective, personalized quizzes has
+                                significantly improved my retention and
+                                understanding of the subjects I'm studying..
+                                <strong>&#8212; &#8220; Lukumon Adewale &#8221;
+                                    &nbsp; <span class="fi fi-us"></span></strong>
+                            </p>
+                        </div>
+                        <!-- Feedback 6 -->
+                        <div class="carousel-item px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">Quiz-It's intuitive interface makes it easy for me to navigate
+                                and access my quizzes whenever I need them. The seamless
+                                design and clear layout ensure that I can find what I need without any hassle, allowing
+                                me to maximize my study time and
+                                stay organized.
+                                <strong>&#8212;
+                                    &#8220; <span>Myriam Teresti</span> &#8221;
+                                    &nbsp; <span class="fi fi-fr"></span></strong>
+                            </p>
+                        </div>
+                        <!-- Feedback 7 -->
+                        <div class="carousel-item px-5" data-bs-interval="2000">
+                            <p class="lead px-5 justify">Quiz-It has helped me stay organized and motivated throughout
+                                my academic journey. I can't imagine studying without it!
+                                The platform's comprehensive approach to learning, combined with its motivational tools
+                                and resources, has made a
+                                significant difference in my study habits and overall performance.
+                                <strong>&#8212; &#8220; Saleem Anwar
+                                    &#8221;
+                                    &nbsp; <span class="fi fi-au"></span></strong>
+                            </p>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frequenty Asked Questions -->
+    <section id="faq" class="bg-dark-bg text-light-font p-5 p-lg-0 py-lg-5 text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <h1 class="text-warning no-wrap pb-3"><i class="bi bi-question-diamond-fill"></i> Lets Clear Your
+                        Doubts
+                    </h1>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                                How do I upload my course materials?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Uploading your course materials on Quiz-It is simple. Just log
+                                into
+                                your
+                                account, navigate to the upload section, and select your desired files from your device.
+                                Once uploaded,
+                                Quiz-It will process the documents and generate relevant quiz questions for you.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                aria-controls="flush-collapseThree">
+                                What types of files can I upload?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Quiz-It supports a variety of file formats, including PDFs and
+                                Microsoft Word
+                                documents (.doc, .docx). This flexibility ensures you can upload your study materials in
+                                the
+                                format that
+                                best suits your needs.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                aria-controls="flush-collapseFour">
+                                How are the quizzes generated?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Our advanced algorithm analyzes your uploaded documents,
+                                identifies
+                                key concepts
+                                and topics, and generates multiple-choice questions that accurately reflect the content.
+                                This ensures
+                                that the quizzes are both relevant and comprehensive.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseFive" aria-expanded="false"
+                                aria-controls="flush-collapseFive">
+                                Can I track my progress over time?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Yes, Quiz-It provides detailed performance analytics that allow
+                                you
+                                to track
+                                your progress over time. You can review your quiz results, identify areas of
+                                improvement,
+                                and monitor
+                                your overall performance to help you stay on track with your studies.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseSix" aria-expanded="false"
+                                aria-controls="flush-collapseSix">
+                                Is my data secure?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Absolutely. At Quiz-It, we prioritize the security and privacy
+                                of
+                                our users. All
+                                uploaded documents and personal information are securely stored and protected using
+                                advanced
+                                encryption
+                                technologies to ensure your data remains confidential.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseSeven" aria-expanded="false"
+                                aria-controls="flush-collapseSeven">
+                                Can I use Quiz-It on my mobile device?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSeven" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Yes, Quiz-It is designed to be fully responsive, making it
+                                accessible on various
+                                devices, including smartphones and tablets. You can study and take quizzes on the go,
+                                anytime and
+                                anywhere.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseEight" aria-expanded="false"
+                                aria-controls="flush-collapseEight">
+                                Is there a cost to use Quiz-It?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseEight" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Quiz-It offers a variety of subscription plans to suit different
+                                needs. We
+                                provide a free tier with basic features and premium plans that offer additional benefits
+                                and
+                                advanced
+                                features. Visit our pricing page for more details.</div>
+                        </div>
+                    </div>
+                </div>
+                <img class="img-fluid w-50 d-none d-sm-block rounded" src="static/img/body/faq.png" alt="Favourite">
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <!-- Footer -->
+    <!-- <footer class="p-2 bg-dark text-white text-center position-relative">
+        <div class="container">
+            <p class="lead">Copyright &copy; 2024 Quiz-It</p>
+
+            <a href="#" class="position-absolute bottom-0 end-0 p-5">
+                <i class="bi bi-arrow-up-circle h1"></i>
+            </a>
+        </div>
+    </footer> -->
+</body>
+
+</html>

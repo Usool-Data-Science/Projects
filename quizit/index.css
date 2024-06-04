@@ -1,0 +1,19 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body::before {
+    display: block;
+    content: "";
+    height: 60px;
+}
+
+.off-screen {
+    margin-left: -999px;
+}
+
+@media(min-width: 768px) {
+    .news-input {
+        width: 50%;
+    }
+}

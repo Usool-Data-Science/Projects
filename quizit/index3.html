@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz-It</title>
+
+    <link rel="stylesheet" href="bootstrap3/bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <nav class="nav navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navCollapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">Quiz-It</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navCollapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">upload</a></li>
+                    <li><a href="#">Result</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#"><span class="glyphicon glyphicon-envelope"></span>
+                            Contact Us</a></li>
+                    <li class="active"><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+                            Login</a></li>
+                </ul>
+                <form action="" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search History ...">
+                    </div>
+                    <button class="btn btn-danger">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="container">
+        <div class="row preview">
+
+        </div>
+        <div class="row">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-upload"></span>
+                    Upload</button>
+                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
+                    Remove</button>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-3 col-xs-6">COLUMN 1</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-xs-6">COLUMN 1</div>
+        </div>
+    </div> -->
+    <div class="container">
+        <h2 class="text-center">Upload and Preview PDF</h2>
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="pdfFile">Select PDF file:</label>
+                <input type="file" class="form-control" id="pdfFile" accept="application/pdf">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+        <hr>
+        <div id="pdfPreview" class="text-center">
+            <canvas id="pdfCanvas"></canvas>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="bootstrap3/bootstrap-3.4.1-dist/js/bootstrap.min.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

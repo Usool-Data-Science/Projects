@@ -1,0 +1,7 @@
+// import the amalgamation of all the bootstrap config only by import bootstrap.scss
+
+// Check the variables you want to update and declare it before the import
+
+$primary: rgba(21, 128, 0, 0.774);
+
+@import '../node_modules/bootstrap/scss/bootstrap';

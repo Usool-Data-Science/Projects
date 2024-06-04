@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 1.5rem;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/*************** UNILITIES *************/
+:root {
+    /* COLORS */
+    --light-bg: #f0f8ff;
+    --dark-bg: #1B2B34;
+    --dark-font: #000;
+    --light-font: #fff;
+}
+
+.offscreen {
+    margin-left: -9999;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.hidden,
+.hide-on-small {
+    display: none;
+}
+
+/*********** CUSTOM STYLES ***************/

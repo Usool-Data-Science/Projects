@@ -1,0 +1,18 @@
+.preview {
+    height: 400px;
+    width: 600px;
+    background-color: antiquewhite;
+    border-radius: 1rem;
+
+}
+
+#pdfPreview {
+    display: none;
+    margin-top: 20px;
+}
+
+#pdfCanvas {
+    border: 1px solid #ddd;
+    width: 100%;
+    max-width: 800px;
+}
