@@ -40,7 +40,6 @@ $theme-colors: map-merge($custom-theme-color, $theme-colors);
 body::before {
     display: block;
     content: "";
-    height: 60px;
 }
 
 .justify {
@@ -53,7 +52,6 @@ footer {
     bottom: 0;
     font-size: 2rem;
     text-align: center;
-    margin: 5px
 }
 
 .curve-edge {

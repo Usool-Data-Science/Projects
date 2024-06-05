@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css" />
+    <script defer src="{{ url_for('static', filename='js/upload.js') }}"></script>
+
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Upload</title>
+    {% endif %}
+</head>
+
+<body class="d-flex flex-column flex-nowrap">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light navbar-dark-font py-2 fixed-top flex-grow-0">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src="static/img/1.jpeg" alt="Quiz-It" class="logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex subscribe" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Quiz-Id ..." aria-label="Search">
+                        <button class="btn btn-dark" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow-1 d-flex flex-row">
+        <section class="flex-grow-1 d-flex flex-column ">
+            <article class="flex-grow-1 drop_zone centering">
+                <form id="upload-form" method="POST" action="/upload" enctype="multipart/form-data">
+                    <span class="drop_zone__prompt">
+                        Click or Drag-Drop your file to upload!
+                    </span>
+                    <input type="file" name="myFile" class="drop_zone__input">
+                </form>
+            </article>
+            <article class="history flex-grow-1 centering previewer">
+                <h1>PREVIEW</h1>
+            </article>
+        </section>
+
+        <section class="flex-grow-1 d-flex flex-column ">
+            <article class="flex-grow-1 centering">
+                <h1>RESULT</h1>
+            </article>
+            <article class="history flex-grow-1 centering">
+                <h1>HISTORY</h1>
+            </article>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="p-1 bg-light-bg ligth-font text-center flex-grow-0">
+        <div class="container">
+            <p class="lead">Copyright &copy; 2024 Quiz-It
+                <a href="#" class="float-end d-inline-block">
+                    <i class="bi bi-arrow-up-circle h3"></i>
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Optional bootstrap bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

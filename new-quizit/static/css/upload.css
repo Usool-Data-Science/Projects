@@ -4,14 +4,16 @@
     box-sizing: border-box;
 }
 
-html {
-    font-size: 1.5rem;
-}
-
 body {
     min-height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
+    background-color: #1B2B34;
+    ;
+}
+
+body::before {
+    display: block;
+    content: "";
+    height: 80px;
 }
 
 /*************** UNILITIES *************/
@@ -37,3 +39,94 @@ body {
 }
 
 /*********** CUSTOM STYLES ***************/
+
+.centering {
+    display: grid;
+    place-content: center;
+}
+
+.drop_zone {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    color: gainsboro;
+    border: 5px dotted gainsboro;
+    border-radius: 10px;
+}
+
+.drop_zone--over {
+    border: 5px solid green;
+}
+
+.drop_zone__input {
+    display: none;
+}
+
+.drop_zone__thumb {
+    width: 60%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #cccccc;
+    background-size: cover;
+    position: relative;
+}
+
+.drop_zone__thumb::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* CSS for the previewer class */
+.previewer {
+    background-color: #f9f9f9;
+    /* Light background color for contrast */
+    border: 1px solid #ddd;
+    /* Subtle border to define the area */
+    border-radius: 8px;
+    /* Rounded corners for a softer look */
+    padding: 20px;
+    /* Padding inside the preview area */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    margin: 20px;
+    /* Margin around the preview area */
+    overflow: hidden;
+    /* Ensure content doesn't overflow */
+}
+
+.previewer h1 {
+    font-size: 1.5em;
+    /* Larger font size for the heading */
+    color: #333;
+    /* Darker color for the heading */
+    margin-bottom: 20px;
+    /* Space below the heading */
+    text-align: center;
+    /* Center-align the heading */
+}
+
+.previewer iframe {
+    width: 100%;
+    /* Full width for the iframe */
+    height: 500px;
+    /* Fixed height for the iframe */
+    border: none;
+    /* Remove border from the iframe */
+    border-radius: 4px;
+    /* Rounded corners for the iframe */
+}
