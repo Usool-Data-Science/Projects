@@ -63,6 +63,19 @@
             </article>
             <article class="history flex-grow-1 centering">
                 <h1>HISTORY</h1>
+                <ul>
+                    {% for mcq in mcqs %}
+                    {% for question, options in mcq.items() %}
+                    <li>{{ question }}
+                        <ul>
+                            {% for option in options %}
+                            <li>{{ option }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
             </article>
         </section>
     </main>

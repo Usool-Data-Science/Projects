@@ -135,7 +135,7 @@ function handleFileUpload(file) {
             // Just preview the file uploaded using its URL object
             const previewSection = document.querySelector(".previewer");
             const pdfUrl = URL.createObjectURL(file);
-            previewSection.innerHTML = `<iframe src="${pdfUrl}" width="100%" height="500px"></iframe>`;
+            previewSection.innerHTML = `<iframe src="${pdfUrl}" width="100%" height="300px"></iframe>`;
         })
         .catch(error => {
             console.error('Error:', error);

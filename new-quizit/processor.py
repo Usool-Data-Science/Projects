@@ -1,6 +1,13 @@
 import PyPDF2
 import docx
 import os
+from dotenv import load_dotenv, find_dotenv
+
+# client = OpenAI(api_key=os.environ.get('GPT_API_KEY'),)
+# model = 'gpt-3.5-turbo-0125'
+# temperature = 0.3
+# max_tokens = 500
+# topic = ""
 
 def read_file_content(file_path):
     file_extension = os.path.splitext(file_path)[1].lower()
@@ -8,7 +15,7 @@ def read_file_content(file_path):
 
     if file_extension == '.pdf':
         tempfile = read_pdf(file_path)
-    elif file_extension == '.docx':
+    elif file_extension in ['.docx','.doc', '.rtf'] :
         tempfile = read_docx(file_path)
     elif file_extension == '.txt':
         tempfile = read_txt(file_path)
