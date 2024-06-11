@@ -1,7 +1,6 @@
 import PyPDF2
 import docx
 import os
-from dotenv import load_dotenv, find_dotenv
 
 # client = OpenAI(api_key=os.environ.get('GPT_API_KEY'),)
 # model = 'gpt-3.5-turbo-0125'
