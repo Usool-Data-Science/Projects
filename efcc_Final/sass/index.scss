@@ -1,0 +1,22 @@
+// import the amalgamation of all the bootstrap config only by import bootstrap.scss
+
+// Check the variables you want to update and declare it before the import
+
+$primary: rgba(21, 128, 0, 0.774);
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$custom-theme-color: (
+    "light-bg": #f0f8ff,
+    "dark-bg": #1B2B34,
+    "dark-font": #000,
+    "light-font": #fff
+);
+
+$theme-colors: map-merge($custom-theme-color, $theme-colors);
+
+// Usage
+
+
+@import '../node_modules/bootstrap/scss/bootstrap';

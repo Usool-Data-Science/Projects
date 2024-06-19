@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suspect Information</title>
+</head>
+
+<body>
+    <h2>Suspect Information Form</h2>
+    <h3>
+        <ul>
+            {% for suspect in suspects %}
+            <li>{{ suspect.id }}: <b>{{ suspect.casefile_no }}</b></li>
+            {% endfor %}
+        </ul>
+    </h3>
+    <form id="suspectForm" action="/submit_suspect_info" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+        <label for="height">Height (in cm):</label>
+        <input type="number" id="height" name="height" required>
+        <br><br>
+        <label for="skin_color">Skin Color:</label>
+        <select id="skin_color" name="skin_color">
+            <option value="Dark Brown">Dark Brown</option>
+            <option value="Brown">Brown</option>
+            <option value="Light Brown">Light Brown</option>
+            <option value="Dark">Dark</option>
+            <option value="Fair">Fair</option>
+            <option value="Caramel">Caramel</option>
+        </select>
+        <br><br>
+        <label for="religion">Religion:</label>
+        <select id="religion" name="religion">
+            <option value="Islam">Islam</option>
+            <option value="Christianity">Christianity</option>
+            <option value="Traditional">Traditional</option>
+            <option value="Others">Others</option>
+        </select>
+        <br><br>
+        <label for="id_type">ID Type:</label>
+        <select id="id_type" name="id_type">
+            <option value="Licence">Licence</option>
+            <option value="NIN">NIN</option>
+            <option value="Passport">Passport</option>
+        </select>
+        <br><br>
+        <!-- Additional fields for suspect information -->
+        <!-- Include other suspect attributes as needed -->
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+
+</body>
+
+</html>
