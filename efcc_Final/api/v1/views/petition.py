@@ -1,23 +1,52 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for petitions """
-from flask import Flask, jsonify, make_response, abort, request
+from flask import (Flask, flash, jsonify, make_response, abort,
+                   request, redirect, url_for, render_template)
 from api.v1.views import app_views
+from api.v1.forms import ComplainantForm
 from models import storage
 from models.base_model import BaseModel
 from models.complainant import Complainant
 from models.petition import Petition
-
+from api.v1.forms import PetitionForm
 
 @app_views.route('/petitions', methods=['GET'], strict_slashes=False)
 def get_petitions():
     """
     Retrieves the list of all Petition objects
     """
+    form = PetitionForm()
     all_petitions = storage.all(Petition).values()
-    list_petitions = []
+    petitions = []
     for petition in all_petitions:
-        list_petitions.append(petition.to_dict())
-    return jsonify(list_petitions)
+        petn = petition.to_dict()
+        if "__class__" in petn:
+            del petn["__class__"]
+        petitions.append(petn)
+    petitions.reverse()
+    return render_template("petition.html",
+                        petitions=petitions[:5], title="Petition",
+                        sum_petitions=len(petitions), form=form)
+
+@app_views.route('/petitions', methods=['POST'], strict_slashes=False)
+def post_petitions():
+    """
+    Creates a Petition
+    """
+    form = PetitionForm()
+    if form.validate_on_submit():
+        print("FORM IS AVAILABLE")
+        title = form.title.data
+        instance = Petition(title=form.title.data,
+                    description=form.description.data,
+                    complainant_id=form.complainant_id.data,
+                    status=form.status.data)
+        instance.save()
+        flash(f'A new Petition titled "{title}" has been created', 'success')
+    else:
+        flash('There is an error creating the Petition', 'danger')
+    return redirect(url_for('app_views.get_petitions'))
+
 
 
 @app_views.route('/petitions/<petition_id>', methods=['GET'], strict_slashes=False)
@@ -46,23 +75,6 @@ def delete_petition(petition_id):
     storage.save()
 
     return make_response(jsonify({}), 200)
-
-
-@app_views.route('/petitions', methods=['POST'], strict_slashes=False)
-def post_petition():
-    """
-    Creates a Petition
-    """
-    if not request.get_json():
-        abort(400, description="Not a JSON")
-
-    if 'name' not in request.get_json():
-        abort(400, description="Missing name")
-
-    data = request.get_json()
-    instance = Petition(**data)
-    instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
 
 
 @app_views.route('/petitions/<petition_id>', methods=['PUT'], strict_slashes=False)

@@ -7,3 +7,5 @@ from api.v1.views.complainant import *
 from api.v1.views.suspect import *
 # from api.v1.views.recovery import *
 from api.v1.views.petition import *
+from api.v1.views.fingerprint import *
+from api.v1.views.identity import *

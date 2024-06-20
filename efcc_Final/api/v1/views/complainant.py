@@ -31,15 +31,6 @@ def post_complainants():
     """
     Creates a Complainant
     """
-    # if not request.get_json():
-    #     abort(400, description="Not a JSON")
-
-    # if 'name' not in request.get_json():
-    #     abort(400, description="Missing name")
-    # data = request.get_json()
-    # instance = Complainant(**data)
-    # return make_response(jsonify(instance.to_dict()), 201)
-
     form = ComplainantForm()
     if form.validate_on_submit():
         print("FORM IS AVAILABLE")

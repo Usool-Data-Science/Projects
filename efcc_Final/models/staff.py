@@ -1,12 +1,16 @@
-#!/usr/bin/python3
-""" State Module for HBNB project """
+# from api.v1.app import login_manager
+from datetime import datetime
+# from flask_login import UserMixin
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, DateTime, String, Integer, Enum
 from sqlalchemy import Table, ForeignKey
 from sqlalchemy.orm import  relationship
 from sqlalchemy.dialects.mysql import VARCHAR
-from sqlalchemy.types import BLOB
 from os import getenv
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User.query.get(int(user_id))
 
 nigeria_states = ("Abia", "Abuja", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi",
                   "Bayelsa", "Benue", "Borno", "Cross River", "Delta",
@@ -17,23 +21,22 @@ nigeria_states = ("Abia", "Abuja", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi",
                   "Sokoto", "Taraba", "Yobe", "Zamfara")
 
 
-association_pet_comp = Table("petition_complainant", Base.metadata,
+association_pet_staff = Table("petition_staff", Base.metadata,
                          Column("petition_id", ForeignKey("petitions.id"),
                          primary_key=True, nullable=False),
-                         Column("complainant_id", ForeignKey("complainants.id"),
+                         Column("staff_id", ForeignKey("staffs.id"),
                          primary_key=True, nullable=False))
 
-class Complainant(BaseModel, Base):
-    """A complainant object that defines each complainant features"""
+# Create the database models
+class Staff(BaseModel, Base):
+    """A Staff object that defines each Efcc staff features"""
 
-    __tablename__ = 'complainants'
+    __tablename__ = 'staffs'
     name = Column(String(128), nullable=False)
     address = Column(VARCHAR(128), nullable=False)
-    nationality = Column(String(20), default="Nigerian", nullable=False)
     state = Column(Enum(*nigeria_states), nullable=False)
     gender = Column(Enum('Male', 'Female'), nullable=False)
     age = Column(Integer, nullable=False)
-    occupation = Column(String(50), nullable=False)
     religion = Column(Enum('Islam', 'Christianity',
                            'Traditional', 'Others'),
                       nullable=False)
@@ -41,31 +44,13 @@ class Complainant(BaseModel, Base):
                             'Tertiary'),
                        nullable=False)
     phone_no = Column(VARCHAR(15), nullable=False)
-    suspect_ids = []
     petition_ids = []
 
     # Relationships
     if getenv("EFCC_TYPE_STORAGE") == "db":
-        suspects = relationship("Suspect", secondary="complainant_suspect", viewonly=False, back_populates="complainants")
-        petitions = relationship("Petition", secondary="petition_complainant", viewonly=False, back_populates="complainants")
+        petitions = relationship("Petition", secondary="petition_staff", viewonly=False, back_populates="staffs")
 
     else:        
-        @property
-        def suspects(self):
-            import models
-            from models.suspect import Suspect
-            all_suspects = models.storage.all(Suspect).values()
-            suspect_list = [susp for susp in all_suspects if susp.id in self.suspect_ids]
-            return suspect_list
-        
-        @suspects.setter
-        def suspects(self, value):
-            """Checks what goes into petition.suspects and tracks it"""
-            if isinstance(value, Suspect):
-                self.suspect_ids.append(value.id)
-            else:
-                print("{} is not a Suspect instance".format(value))
-
         @property
         def petitions(self):
             import models
@@ -81,3 +66,6 @@ class Complainant(BaseModel, Base):
                 self.petition_ids.append(value.id)
             else:
                 print("{} is not a Petition instance".format(value))
+
+    def __repr__(self):
+        return f"Staff('{self.first_name}', '{self.last_name}', '{self.id}')"

@@ -23,7 +23,7 @@
                 <tr>
                     <th scope="row">&nbsp;</th>
                     {% for obj in complainants[0].keys() %}
-                    <th scope="col">{{ obj }}</th>
+                    <th scope="col">{{ obj.title().replace('_', ' ') }}</th>
                     {% endfor %}
                 </tr>
             </thead>
@@ -41,8 +41,8 @@
                 <tr>
                     <td colspan="{{ complainants[0]|length - 1}}">Total Complainants: {{ sum_complainants }}
                     </td>
-                    <td colspan="2"><button type="button" class="btn btn-dark" id="formSwitch">Add New
-                            Complainant</button></td>
+                    <td colspan="2"><button type="button" class="btn btn-dark" id="formSwitch" data-id="formContent">Add
+                            New Complainant</button></td>
                 </tr>
             </tfoot>
         </table>
@@ -50,8 +50,8 @@
 </div>
 
 <!-- Complainant Registration Form -->
-<div class="form--content hidden">
-    <form id="formContent" action="{{ url_for('app_views.post_complainants') }}" method="POST">
+<div class="form--content hidden" id="formContent">
+    <form action="{{ url_for('app_views.post_complainants') }}" method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4 form--title">Register Complainant</legend>

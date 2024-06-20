@@ -1,55 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Petition Information</title>
-</head>
+<!-- Flash message bar -->
+<div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
 
-<body>
-    <h2>Petition Information Form</h2>
-    <h3>
-        <ul>
-            {% for petition in petitions %}
-            <li>{{ petition.id }}: <b>{{ petition.casefile_no }}</b></li>
+<!-- Petition overview table  -->
+<div class="tabular--wrapper">
+    <h3 class="main--title">Petitions Overview</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="row">&nbsp;</th>
+                    {% for obj in petitions[0].keys() %}
+                    <th scope="col">{{ obj.title().replace('_', ' ') }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in petitions %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    {% for k, v in obj.items() %}
+                    <td>{{ obj.get(k, '') }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="{{ petitions[0]|length - 1}}">Total Petitions: {{ sum_petition }}
+                    </td>
+                    <td colspan="2"><button type="button" class="btn btn-dark" id="formSwitch" data-id="formContent">Add
+                            New
+                            Petition</button></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- Petition Registration Form -->
+<div class="form--content hidden" id="formContent">
+    <form action="{{ url_for('app_views.post_petitions') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4 form--title">Register Petition</legend>
+
+            <!-- Form fields for Petition -->
+            {% for field in form %}
+            {% if field.type != 'CSRF Token' and field.type != 'SubmitField' %}
+            <div class="form-group">
+                {{ field.label(class="form-control-label") }}
+                {% if field.errors %}
+                {{ field(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in field.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ field(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            {% endif %}
             {% endfor %}
-        </ul>
-    </h3>
-    <form id="petitionForm" action="/submit_petition_info" method="post">
-        <label for="casefile_no">Casefile Number:</label>
-        <input type="text" id="casefile_no" name="casefile_no" required>
-        <br><br>
-        <label for="cr_no">CR Number:</label>
-        <input type="text" id="cr_no" name="cr_no" required>
-        <br><br>
-        <label for="date_received">Date Received:</label>
-        <input type="date" id="date_received" name="date_received" required>
-        <br><br>
-        <label for="date_assigned">Date Assigned:</label>
-        <input type="date" id="date_assigned" name="date_assigned" required>
-        <br><br>
-        <label for="amount_involved">Amount Involved:</label>
-        <input type="number" id="amount_involved" name="amount_involved">
-        <br><br>
-        <label for="status_signal">Status Signal:</label>
-        <select id="status_signal" name="status_signal">
-            <option value="Convicted">Convicted</option>
-            <option value="In-Progress">In-Progress</option>
-        </select>
-        <br><br>
-        <label for="petition_source">Petition Source:</label>
-        <select id="petition_source" name="petition_source">
-            <option value="Intelligence">Intelligence</option>
-            <option value="Regular-Complain">Regular-Complain</option>
-        </select>
-        <br><br>
 
-        <!-- Include additional fields as needed -->
-
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.reset(class="btn btn-outline-danger") }}
+            </div>
+        </fieldset>
     </form>
-</body>
+</div>
 
-</html>
+{% endblock content %}

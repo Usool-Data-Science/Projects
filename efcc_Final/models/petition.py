@@ -26,12 +26,14 @@ class Petition(BaseModel, Base):
     recovery_ids = []
     suspect_ids = []
     complainant_ids = []
+    staff_ids = []
 
     # Relationships
     if getenv("EFCC_TYPE_STORAGE") == "db":
         recoveries = relationship("Recovery", cascade="all, delete-orphan", backref="petition")
         suspects = relationship("Suspect", secondary="petition_suspect", viewonly=False, back_populates="petitions")
         complainants = relationship("Complainant", secondary="petition_complainant", viewonly=False, back_populates="petitions")
+        staffs = relationship("Staff", secondary="petition_staff", viewonly=False, back_populates="petitions")
     else:
         @property
         def recoveries(self):
@@ -88,6 +90,21 @@ class Petition(BaseModel, Base):
                 self.complainant_ids.append(value.id)
             else:
                 raise TypeError("{} is not a Complainant istance".format(value))
+        @property
+        def staffs(self):
+            import models
+            from models.staff import Staff
+            all_staffs = models.storage.all(Staff).values()
+            staff_list = [stf for stf in all_staffs if stf.id in self.complainant_ids]
+            return staff_list
+
+        @staffs.setter
+        def staffs(self, value):
+            """Checks what goes into petition.staffs and tracks it"""
+            if isinstance(value, Staff) and self.id == value.petition_id:
+                self.staff_ids.append(value.id)
+            else:
+                raise TypeError("{} is not a Staff istance".format(value))
 
     # def __init__(self, *args, **kwargs):
     #     """Initializes the object"""

@@ -1,0 +1,12 @@
+PROBLEM 1:
+from werkzeug.urls import url_parse
+ImportError: cannot import name 'url_parse' from 'werkzeug.urls' (/home/usool/.local/lib/python3.8/site-packages/werkzeug/urls.py)
+SOLUTION 1:
+- Open the file part from which the importError is occuring i.e. vim /home/usool/.local/lib/python3.8/site-packages/flask/testing.py
+- Comment out the line 9 which is having import error and replace it with:
+from urllib.parse import urlparse as url_parse
+- instead of:
+from werkzeug.urls import url_parse
+
+PROBLEM 2:
+Exception: Missing user_loader or request_loader. Refer to http://flask-login.readthedocs.io/#how-it-works for more info.

@@ -5,11 +5,17 @@ from os import getenv
 from dotenv import load_dotenv
 from models import storage
 from api.v1.views import app_views
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 load_dotenv()
 app.config["SECRET_KEY"] = getenv('APP_SECRET_KEY')
+bcrypt = Bcrypt(app)
+# login_manager = LoginManager(app)
+# login_manager.login_view = 'login'
+# login_manager.login_message_category = 'info'
 
 @app.teardown_appcontext
 def close_db(error):

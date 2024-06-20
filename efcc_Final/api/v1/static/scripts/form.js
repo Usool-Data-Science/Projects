@@ -1,12 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var formSwitch = document.querySelector("#formSwitch");
-    var formContent = document.querySelector(".form--content");
+    var formSwitches = document.querySelectorAll("#formSwitch");
 
-    formSwitch.addEventListener('click', function () {
-        if (formContent.classList.contains('hidden')) {
-            formContent.classList.remove('hidden');
-        } else {
-            formContent.classList.add('hidden');
-        }
+    formSwitches.forEach(function (formSwitch) {
+        var initialLabel = formSwitch.textContent;
+        formSwitch.addEventListener('click', function () {
+            var dataID = this.getAttribute("data-id");
+            var formContent = document.querySelector("#" + dataID);
+
+            if (formContent.classList.contains('hidden')) {
+                this.textContent = "Close Form Page";
+                formContent.classList.remove('hidden');
+            } else {
+                this.textContent = initialLabel;
+                formContent.classList.add('hidden');
+            }
+        });
     });
 });
