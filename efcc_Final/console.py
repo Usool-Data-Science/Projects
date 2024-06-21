@@ -9,6 +9,7 @@ from models.suspect import Suspect
 from models.fingerprint import FingerPrint
 from models.identity import Identity
 from models.petition import Petition
+from models.staff import Staff
 from models.recovery import (Monetary, Bank, Crypto, Cash, Recovery,
                              Electronic, Phone, Laptop, Other,
                              Automobile, Jewelry, LandedProperty)
@@ -26,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
                    "Monetary": Monetary, "Bank": Bank, "Crypto": Crypto, "Cash": Cash,
                    "Recovery": Recovery, "Electronic": Electronic, "Phone": Phone,
                    "Laptop": Laptop, "Other": Other, "Automobile": Automobile,
-                   "Jewelry": Jewelry, "LandedProperty": LandedProperty}
+                   "Jewelry": Jewelry, "LandedProperty": LandedProperty, "Staff": Staff}
 
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {

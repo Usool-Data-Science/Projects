@@ -41,6 +41,8 @@ FROM staffs]
     CAUSE: This problem occured because we have not created the staff table
 SOLUTION: Add the staff table to the db_storage class after importing it. 
     This will ensure that it is created by .reload() when the storage is spinned up.
+    Also ensure that you add it to the console.py, otherwise it will tell you that
+    staff object does not exist.
 
 
 PROBLEM 6:
