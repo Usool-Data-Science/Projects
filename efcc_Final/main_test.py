@@ -8,6 +8,7 @@ from models.suspect import Suspect
 from models.fingerprint import FingerPrint
 from models.identity import Identity
 from models.petition import Petition
+from models.staff import Staff
 from models.recovery import (Monetary, Bank, Crypto, Cash, Recovery,
                                 Electronic, Phone, Laptop, Other,
                                 Automobile, Jewelry, LandedProperty)
@@ -78,25 +79,47 @@ fingerprint5 = FingerPrint(finger_print="fingerprint5", mugshot="mugshot5", susp
 fingerprint5.save()
 
 
+# Create the first instance of Staff
+staff1 = Staff(
+    first_name="Adeshina",
+    last_name="Ibrahim",
+    email="adeshinaibrahim10@gmail.com",
+    password="hashed_password_1",
+    age=30,
+    state="Lagos"
+)
+staff1.save()
+
+# Create the second instance of Staff
+staff2 = Staff(
+    first_name="Oluwatobi",
+    last_name="Olatunde",
+    email="oluwatobiolatunde@example.com",
+    password="hashed_password_2",
+    age=28,
+    state="Ogun"
+)
+staff2.save()
+
 # Create and save 5 instances of Petition
 petition1 = Petition( casefile_no="CASE1", cr_no="CR1", date_received=datetime.now(), date_assigned=datetime.now(),
-                     amount_involved=1000, status_signal='In-Progress', petition_source='Regular-Complain')
+                     amount_involved=1000, status_signal='In-Progress', staff_id=staff1.id, petition_source='Regular-Complain')
 petition1.save()
 
 petition2 = Petition(casefile_no="CASE2", cr_no="CR2", date_received=datetime.now(), date_assigned=datetime.now(),
-                     amount_involved=2000, status_signal='In-Progress', petition_source='Regular-Complain')
+                     amount_involved=2000, status_signal='In-Progress', staff_id=staff1.id, petition_source='Regular-Complain')
 petition2.save()
 
 petition3 = Petition(casefile_no="CASE3", cr_no="CR3", date_received=datetime.now(), date_assigned=datetime.now(),
-                     amount_involved=3000, status_signal='In-Progress', petition_source='Regular-Complain')
+                     amount_involved=3000, status_signal='In-Progress', staff_id=staff1.id, petition_source='Regular-Complain')
 petition3.save()
 
 petition4 = Petition(casefile_no="CASE4", cr_no="CR4", date_received=datetime.now(), date_assigned=datetime.now(),
-                     amount_involved=4000, status_signal='In-Progress', petition_source='Regular-Complain')
+                     amount_involved=4000, status_signal='In-Progress', staff_id=staff2.id, petition_source='Regular-Complain')
 petition4.save()
 
 petition5 = Petition(casefile_no="CASE5", cr_no="CR5", date_received=datetime.now(), date_assigned=datetime.now(),
-                     amount_involved=5000, status_signal='In-Progress', petition_source='Regular-Complain')
+                     amount_involved=5000, status_signal='In-Progress', staff_id=staff2.id, petition_source='Regular-Complain')
 petition5.save()
 
 # Create instances of Recovery class
@@ -496,6 +519,9 @@ identity5 = Identity(
 )
 identity5.save()
 
+
+staff1.petitions.extend([petition1, petition2, petition3])
+staff2.petitions.extend([petition4, petition5])
 
 # Link suspects and complainants to petition
 petition1.suspects.extend([suspect1, suspect2, suspect3])

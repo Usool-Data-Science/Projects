@@ -1,3 +1,4 @@
+import email_validator
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import (StringField, PasswordField, SubmitField,
@@ -6,7 +7,9 @@ from wtforms import (StringField, PasswordField, SubmitField,
 from wtforms.validators import (DataRequired, Email, EqualTo,
                                 Length, NumberRange, ValidationError,
                                 URL)
+
 from models.staff import Staff
+from models import storage
 
 id_cards = ('Licence', 'NIN', 'Passport')
 nigeria_skin_colors = ['Dark Brown', 'Brown', 'Light Brown', 'Dark', 'Fair', 'Caramel']
@@ -96,9 +99,18 @@ class RegistrationForm(FlaskForm):
     reset = SubmitField('Clear All', render_kw={"type": "reset"})
 
     def validate_email(self, email):
-        """Check if the email is already taken"""
-        staff = Staff.query.filter_by(email=email.data).first()
-        if staff:
+        """Check if the email is already taken
+            First retrieve all the staffs,
+            then check if there is a specific staff with that email
+        """
+        # staff = Staff.query.filter_by(email=email.data).first()
+        all_staffs = storage.all(Staff).values()
+        the_staff = ''
+        for staff in all_staffs:
+            staff_dict = staff.to_dict()
+            if staff_dict['email'] == email.data:
+                the_staff == staff
+        if the_staff:
             raise ValidationError("That email is taken. Please choose another email!")
 
     def validate_password(self, password):
@@ -110,3 +122,4 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
+    submit = SubmitField('Login')

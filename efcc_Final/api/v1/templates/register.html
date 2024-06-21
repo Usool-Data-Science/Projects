@@ -7,7 +7,7 @@
     {% if title %}
     <title> {{ title }} </title>
     {% else %}
-    <title> EFCC Login</title>
+    <title> EFCC Registration</title>
     {% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landingpage.css') }}">
@@ -69,11 +69,38 @@
                 {% endif %}
                 {% endwith %}
             </div>
-            <form method="POST" action="{{ url_for('app_views.login') }}" class="p-5">
+            <form method="POST" action="{{ url_for('app_views.register') }}">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mt-4">Log In</legend>
-                    <div class="form-group my-4">
+                    <legend class="border-bottom mt-4">Sign Up</legend>
+                    <!-- First Name Field -->
+                    <div class="form-group mt-4">
+                        {{ form.first_name.label(class="form-control-label") }}
+                        {% if form.first_name.errors %}
+                        {{ form.first_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.first_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.first_name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mt-4">
+                        {{ form.last_name.label(class="form-control-label") }}
+                        {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.last_name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mt-4">
                         {{ form.email.label(class="form-control-label") }}
                         {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -99,17 +126,50 @@
                         {{ form.password(class="form-control form-control-lg") }}
                         {% endif %}
                     </div>
-                    <div class="form-check">
-                        {{ form.remember(class="form-check-input") }}
-                        {{ form.remember.label(class="form-check-label") }}
+                    <div class="form-group mt-4">
+                        {{ form.confirm_password.label(class="form-control-label") }}
+                        {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.confirm_password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mt-4">
+                        {{ form.age.label(class="form-control-label") }}
+                        {% if form.age.errors %}
+                        {{ form.age(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.age.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.age(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mt-4">
+                        {{ form.state_of_origin.label(class="form-control-label") }}
+                        {% if form.state_of_origin.errors %}
+                        {{ form.state_of_origin(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.state_of_origin.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.state_of_origin(class="form-control form-control-lg") }}
+                        {% endif %}
                     </div>
                 </fieldset>
                 <div class="form-group mt-4">
-                    {{ form.submit(class="btn btn-outline-info") }}
+                    {{ form.submit(class="btn btn-outline-success") }}
+                    {{ form.reset(class="btn btn-outline-danger") }}
                 </div>
-                <small class="ml-2">
-                    <a href="#">Forgot Password?</a>
-                </small>
             </form>
         </div>
     </main>
@@ -132,3 +192,5 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
 </body>
+
+</html>

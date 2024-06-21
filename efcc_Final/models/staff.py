@@ -20,35 +20,32 @@ nigeria_states = ("Abia", "Abuja", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi",
                   "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers",
                   "Sokoto", "Taraba", "Yobe", "Zamfara")
 
-
-association_pet_staff = Table("petition_staff", Base.metadata,
-                         Column("petition_id", ForeignKey("petitions.id"),
-                         primary_key=True, nullable=False),
-                         Column("staff_id", ForeignKey("staffs.id"),
-                         primary_key=True, nullable=False))
+# association_pet_staff = Table("petition_staff", Base.metadata,
+#                          Column("petition_id", ForeignKey("petitions.id"),
+#                          primary_key=True, nullable=False),
+#                          Column("staff_id", ForeignKey("staffs.id"),
+#                          primary_key=True, nullable=False))
 
 # Create the database models
 class Staff(BaseModel, Base):
     """A Staff object that defines each Efcc staff features"""
 
     __tablename__ = 'staffs'
-    name = Column(String(128), nullable=False)
-    address = Column(VARCHAR(128), nullable=False)
-    state = Column(Enum(*nigeria_states), nullable=False)
-    gender = Column(Enum('Male', 'Female'), nullable=False)
+    # staff_no = ''
+    # admin_pass = ''
+    # location = ''
+    first_name = Column(String(50), nullable=False)
+    last_name = Column(String(50), nullable=False)
+    email = Column(VARCHAR(128), nullable=False)
+    password = Column(VARCHAR(128), nullable=False)
     age = Column(Integer, nullable=False)
-    religion = Column(Enum('Islam', 'Christianity',
-                           'Traditional', 'Others'),
-                      nullable=False)
-    education = Column(Enum('Primary', 'Secondary',
-                            'Tertiary'),
-                       nullable=False)
-    phone_no = Column(VARCHAR(15), nullable=False)
+    state = Column(Enum(*nigeria_states), nullable=False)
+
     petition_ids = []
 
     # Relationships
     if getenv("EFCC_TYPE_STORAGE") == "db":
-        petitions = relationship("Petition", secondary="petition_staff", viewonly=False, back_populates="staffs")
+        petitions = relationship("Petition", backref="staff", lazy=True)
 
     else:        
         @property

@@ -1,5 +1,8 @@
-from flask import Flask, jsonify, render_template
+from flask import (Flask, jsonify, render_template, flash, request, 
+                    redirect, url_for)
+
 from api.v1.views import app_views
+from api.v1.app import bcrypt
 from api.v1.forms import LoginForm, RegistrationForm
 from models import storage
 from models.base_model import BaseModel
@@ -8,6 +11,7 @@ from models.suspect import Suspect
 from models.fingerprint import FingerPrint
 from models.identity import Identity
 from models.petition import Petition
+from models.staff import Staff
 from models.recovery import (Monetary, Bank, Crypto, Cash, Recovery,
                                 Electronic, Phone, Laptop, Other,
                                 Automobile, Jewelry, LandedProperty)
@@ -25,26 +29,23 @@ def register():
     # if current_user.is_authenticated:
     #     return redirect(url_for("upload"))
     form = RegistrationForm()
-    if form.validate_on_submit():
-        pasw_hs = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = Staff(
-            first_name=form.first_name.data,
-            last_name=form.last_name.data,
-            email=form.email.data,
-            password=pasw_hs,
-            profession=form.profession.data,
-            age=form.age.data,
-            country=form.country.data,
-            state=form.state.data,
-            city=form.city.data,
-            area_of_interest=form.area_of_interest.data,
-            school=form.school.data,
-            school_id=form.school_id.data
-        )
-        db.session.add(user)
-        db.session.commit()
-        flash(f'Your account have been created!', 'success')
-        return redirect(url_for('login'))
+    if request.method == "POST":
+        if form.validate_on_submit():
+            pasw_hs = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+            staff = Staff(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                password=form.password.data,
+                age=form.age.data,
+                state=form.state_of_origin.data,
+            )
+
+            staff.save()
+            flash(f'Your staff account have been created!', 'success')
+            return redirect(url_for('app_views.login'))
+        else:
+            flash(f"There is an error creating your staff account", 'danger')
     return render_template('register.html', title='Register', form=form)
 
 
@@ -58,7 +59,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for("upload"))
+            return redirect(next_page) if next_page else redirect(url_for("app_views.dashboard"))
         else:
             flash(f'Login not successful!', 'danger')
     return render_template('login.html', title='Login', form=form)

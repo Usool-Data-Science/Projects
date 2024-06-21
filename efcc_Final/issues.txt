@@ -10,3 +10,38 @@ from werkzeug.urls import url_parse
 
 PROBLEM 2:
 Exception: Missing user_loader or request_loader. Refer to http://flask-login.readthedocs.io/#how-it-works for more info.
+
+
+PROBLEM 3:
+Exception: Install 'email_validator' for email validation support.
+SOLUTION 3:
+- pip install email_validator
+- import email_validator (In the forms.py file)
+
+PROBLEM 4:
+AttributeError: type object 'Staff' has no attribute 'query'
+CAUSE: This occured because our Staff object inherited from (BaseModel, Base) and not from (db.Model and UserMixin)
+    so running `staff = Staff.query.filter_by(email=email.data).first()` will not work.
+SOLUTION:
+We need to create a session and call the query on that session instead of calling it on the object directly like this:
+    all_staffs = storage.all(Staff)
+            the_staff = ''
+            for staff in all_staffs:
+                staff_dict = staff.to_dict()
+                if staff_dict['email'] == email.data:
+                    the_staff == staff
+            if the_staff:
+                raise ValidationError("That email is taken. Please choose another email!")
+
+PROBLEM 5:
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: staffs
+[SQL: SELECT staffs.first_name AS staffs_first_name, staffs.last_name AS staffs_last_name, staffs.email AS staffs_email, staffs.password AS staffs_password, staffs.age AS staffs_age, staffs.state AS staffs_state, staffs.id AS staffs_id, staffs.created_at AS staffs_created_at, staffs.updated_at AS staffs_updated_at 
+FROM staffs]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+    CAUSE: This problem occured because we have not created the staff table
+SOLUTION: Add the staff table to the db_storage class after importing it. 
+    This will ensure that it is created by .reload() when the storage is spinned up.
+
+
+PROBLEM 6:
+There is an error creating your staff account alert everytime you visit the registration page.
