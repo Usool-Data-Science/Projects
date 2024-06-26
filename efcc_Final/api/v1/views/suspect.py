@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for suspects """
+import models
 from flask import (Flask, flash, jsonify, make_response, abort,
                    request, redirect, url_for, render_template)
 from api.v1.views import app_views
 from api.v1.forms import SuspectForm
 from api.v1.forms import IdentityForm
 from api.v1.forms import FingerPrintForm
-from models import storage
 from models.base_model import BaseModel
 from models.complainant import Complainant
 from models.suspect import Suspect
@@ -17,7 +17,7 @@ from models.suspect import Suspect
 #     """
 #     Retrieves the list of all Suspect objects
 #     """
-#     all_suspects = storage.all(Suspect).values()
+#     all_suspects = models.storage.all(Suspect).values()
 #     list_suspects = []
 #     for suspect in all_suspects:
 #         list_suspects.append(suspect.to_dict())
@@ -35,7 +35,7 @@ def get_suspects():
     suspectForm = SuspectForm()
     idForm = IdentityForm()
     fingerForm = FingerPrintForm()
-    all_suspects = storage.all(Suspect).values()
+    all_suspects = models.storage.all(Suspect).values()
     suspects = []
     for suspect in all_suspects:
         susp_dict = suspect.to_dict()
@@ -80,7 +80,7 @@ def post_suspects():
 @app_views.route('/suspects/<suspect_id>', methods=['GET'], strict_slashes=False)
 def get_spec_suspect(suspect_id):
     """ Retrieves a specific Suspect """
-    suspect = storage.get(Suspect, suspect_id)
+    suspect = models.storage.get(Suspect, suspect_id)
     if not suspect:
         abort(404)
 
@@ -94,13 +94,13 @@ def delete_suspect(suspect_id):
     Deletes a Suspect Object
     """
 
-    suspect = storage.get(Suspect, suspect_id)
+    suspect = models.storage.get(Suspect, suspect_id)
 
     if not suspect:
         abort(404)
 
-    storage.delete(suspect)
-    storage.save()
+    models.storage.delete(suspect)
+    models.storage.save()
 
     return make_response(jsonify({}), 200)
 
@@ -127,7 +127,7 @@ def put_suspect(suspect_id):
     """
     Updates a Suspect
     """
-    suspect = storage.get(Suspect, suspect_id)
+    suspect = models.storage.get(Suspect, suspect_id)
 
     if not suspect:
         abort(404)
@@ -141,5 +141,5 @@ def put_suspect(suspect_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(suspect, key, value)
-    storage.save()
+    models.storage.save()
     return make_response(jsonify(suspect.to_dict()), 200)

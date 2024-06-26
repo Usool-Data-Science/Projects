@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for complainants """
+import models
 from flask import (Flask, flash, jsonify, make_response, abort,
                    request, redirect, url_for, render_template)
 from api.v1.views import app_views
 from api.v1.forms import ComplainantForm
-from models import storage
 from models.base_model import BaseModel
 from models.complainant import Complainant
 
@@ -14,7 +14,7 @@ def get_complainants():
     Retrieves the list of all Complainant objects
     """
     form = ComplainantForm()
-    all_complainants = storage.all(Complainant).values()
+    all_complainants = models.storage.all(Complainant).values()
     complainants = []
     for complainant in all_complainants:
         compln = complainant.to_dict()
@@ -56,7 +56,7 @@ def post_complainants():
 #     """
 #     Retrieves the list of all Complainant objects
 #     """
-#     all_complainants = storage.all(Complainant).values()
+#     all_complainants = models.storage.all(Complainant).values()
 #     complainants = []
 #     for complainant in all_complainants:
 #         compln = complainant.to_dict()
@@ -89,7 +89,7 @@ def post_complainants():
 @app_views.route('/complainants/<complainant_id>', methods=['GET'], strict_slashes=False)
 def get_Complainant(complainant_id):
     """ Retrieves a specific Complainant """
-    complainant = storage.get(Complainant, complainant_id)
+    complainant = models.storage.get(Complainant, complainant_id)
     if not complainant:
         abort(404)
 
@@ -103,13 +103,13 @@ def delete_Complainant(complainant_id):
     Deletes a Complainant Object
     """
 
-    complainant = storage.get(Complainant, complainant_id)
+    complainant = models.storage.get(Complainant, complainant_id)
 
     if not complainant:
         abort(404)
 
-    storage.delete(complainant)
-    storage.save()
+    models.storage.delete(complainant)
+    models.storage.save()
 
     return make_response(jsonify({}), 200)
 
@@ -118,7 +118,7 @@ def put_Complainant(complainant_id):
     """
     Updates a Complainant
     """
-    complainant = storage.get(Complainant, complainant_id)
+    complainant = models.storage.get(Complainant, complainant_id)
 
     if not complainant:
         abort(404)
@@ -132,5 +132,5 @@ def put_Complainant(complainant_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(Complainant, key, value)
-    storage.save()
+    models.storage.save()
     return make_response(jsonify(complainant.to_dict()), 200)

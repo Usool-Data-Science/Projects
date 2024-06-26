@@ -1,17 +1,17 @@
 from flask import (Flask, jsonify, render_template, flash, request, 
                     redirect, url_for)
+from flask_login import login_user, current_user, logout_user, login_required
 
+import api
 from api.v1.views import app_views
-from api.v1.app import bcrypt
 from api.v1.forms import LoginForm, RegistrationForm
-from models import storage
+import models
 from models.base_model import BaseModel
 from models.complainant import Complainant
 from models.suspect import Suspect
 from models.fingerprint import FingerPrint
 from models.identity import Identity
 from models.petition import Petition
-from models.staff import Staff
 from models.recovery import (Monetary, Bank, Crypto, Cash, Recovery,
                                 Electronic, Phone, Laptop, Other,
                                 Automobile, Jewelry, LandedProperty)
@@ -26,8 +26,12 @@ def home():
 
 @app_views.route("/register", methods=['GET', 'POST'], strict_slashes=False)
 def register():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for("upload"))
+    from api.v1.app import bcrypt
+    from models.staff import Staff
+
+    if current_user.is_authenticated:
+        return redirect(url_for("app_views.dashboard"))
+    
     form = RegistrationForm()
     if request.method == "POST":
         if form.validate_on_submit():
@@ -36,11 +40,10 @@ def register():
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
                 email=form.email.data,
-                password=form.password.data,
+                password=pasw_hs,
                 age=form.age.data,
                 state=form.state_of_origin.data,
             )
-
             staff.save()
             flash(f'Your staff account have been created!', 'success')
             return redirect(url_for('app_views.login'))
@@ -48,31 +51,36 @@ def register():
             flash(f"There is an error creating your staff account", 'danger')
     return render_template('register.html', title='Register', form=form)
 
-
 @app_views.route("/login", methods=['GET', 'POST'], strict_slashes=False)
 def login():
-    # if current_user.is_authenticated:
-    #     return redirect(url_for("upload"))
+    from api.v1.app import bcrypt
+    from models.staff import Staff
+
+    if current_user.is_authenticated:
+        return redirect(url_for("app_views.dashboard"))
+    
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        user = models.storage.get_by_feature(Staff, 'email', form.email.data)
+        if user and bcrypt.check_password_hash(user.to_dict().get('password'), form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for("app_views.dashboard"))
         else:
-            flash(f'Login not successful!', 'danger')
+            flash(f'Login not successful. Check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 @app_views.route("/logout", strict_slashes=False)
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('app_views.home'))
+
 
 @app_views.route("/dashboard", strict_slashes=False)
+@login_required
 def dashboard():
     response = []
-    all_petitions = list(storage.all(Petition).values())
+    all_petitions = list(models.storage.all(Petition).values())
     """Get complainants names"""
     for petition in all_petitions:
         petition_dict = {}
@@ -108,6 +116,6 @@ def number_objects():
     num_objs = {}
     for k,v in classes.items():
         if k != "BaseModel":
-            num_objs[k] = storage.count(v)
+            num_objs[k] = models.storage.count(v)
 
     return jsonify(num_objs)

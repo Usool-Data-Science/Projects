@@ -1,16 +1,12 @@
-# from api.v1.app import login_manager
 from datetime import datetime
-# from flask_login import UserMixin
+from flask_login import UserMixin
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, DateTime, String, Integer, Enum
 from sqlalchemy import Table, ForeignKey
 from sqlalchemy.orm import  relationship
 from sqlalchemy.dialects.mysql import VARCHAR
 from os import getenv
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.query.get(int(user_id))
+from api.v1.app import login_manager
 
 nigeria_states = ("Abia", "Abuja", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi",
                   "Bayelsa", "Benue", "Borno", "Cross River", "Delta",
@@ -18,16 +14,10 @@ nigeria_states = ("Abia", "Abuja", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi",
                   "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi",
                   "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger",
                   "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers",
-                  "Sokoto", "Taraba", "Yobe", "Zamfara")
-
-# association_pet_staff = Table("petition_staff", Base.metadata,
-#                          Column("petition_id", ForeignKey("petitions.id"),
-#                          primary_key=True, nullable=False),
-#                          Column("staff_id", ForeignKey("staffs.id"),
-#                          primary_key=True, nullable=False))
+                  "Sokoto", "Taraba", "Yobe", "Zamfara") 
 
 # Create the database models
-class Staff(BaseModel, Base):
+class Staff(BaseModel, Base, UserMixin):
     """A Staff object that defines each Efcc staff features"""
 
     __tablename__ = 'staffs'
@@ -36,7 +26,7 @@ class Staff(BaseModel, Base):
     # location = ''
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
-    email = Column(VARCHAR(128), nullable=False)
+    email = Column(VARCHAR(128), nullable=False, unique=True)
     password = Column(VARCHAR(128), nullable=False)
     age = Column(Integer, nullable=False)
     state = Column(Enum(*nigeria_states), nullable=False)

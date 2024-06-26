@@ -7,19 +7,20 @@ from datetime import datetime
 
 """Third part libraries"""
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, DateTime, String
+from sqlalchemy import Column, DateTime, String, Integer
+# from flask_sqlachemy import SQLAlchemy
 
 Base = declarative_base()
 
 class BaseModel:
-    """A base class for all hbnb models"""
-    id = Column(String(60), primary_key=True, nullable=False)
+    """A base class for all EFCC models"""
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     created_at = Column(DateTime, nullable=False, default=datetime.now())
     updated_at = Column(DateTime, nullable=False, default=datetime.now())
     def __init__(self, *args, **kwargs):
         """Instantiates a new model"""
         from models import storage
-        self.id = str(uuid.uuid4())
+        # self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs:
@@ -40,22 +41,13 @@ class BaseModel:
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         # from models import storage
-        from console import storage
+        from models import storage
         self.updated_at = datetime.now()
         storage.new(self)
         storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
-        # dictionary = {}
-        # dictionary.update(self.__dict__)
-        # dictionary.update({'__class__':
-        #                   (str(type(self)).split('.')[-1]).split('\'')[0]})
-        # try:
-        #     dictionary['created_at'] = self.created_at.isoformat()
-        #     dictionary['updated_at'] = self.updated_at.isoformat()
-        # except Exception:
-        #     pass
         s_dict = self.__dict__.copy()
         s_dict["__class__"] = type(self).__name__
         for key, value in s_dict.items():
@@ -74,6 +66,6 @@ class BaseModel:
             import errors.
         """
         # from models import storage
-        from console import storage
+        from models import storage
         storage.delete(self)
         storage.save()

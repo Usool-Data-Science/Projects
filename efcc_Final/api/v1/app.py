@@ -3,23 +3,66 @@
 from flask import Flask, render_template, make_response, jsonify
 from os import getenv
 from dotenv import load_dotenv
-from models import storage
-from api.v1.views import app_views
+
+# Extension importation
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
+# Custom modules
+from api.v1.views import app_views
+import models
+
+staffs = models.newStaff
+
+# Import Environment Variables
+load_dotenv()
+
+# App Creation
 app = Flask(__name__)
 app.register_blueprint(app_views)
-load_dotenv()
 app.config["SECRET_KEY"] = getenv('APP_SECRET_KEY')
-bcrypt = Bcrypt(app)
-# login_manager = LoginManager(app)
-# login_manager.login_view = 'login'
-# login_manager.login_message_category = 'info'
+app.app_context().push()
+
+# Extension Instantiation
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+admin = Admin()
+
+# Extension Initializaiton
+admin.init_app(app)
+bcrypt.init_app(app)
+login_manager.init_app(app)
+login_manager.login_view = 'app_views.login'
+login_manager.login_message_category = 'info'
+
+# Add a new view to the admin page
+admin.add_view(ModelView(Staff, models.storage))
+
+@login_manager.user_loader
+def load_user(user_id):
+    """
+        Retrieves user with a particular ID, It however expect our user model
+        to have the following 4 attributes at least:
+        1. is_authenticated: returns true if the user provided valid credentials
+        2. is_active 3. is_anonymous 4.get_id()
+            All these are available in flask_login and its called UserMixin.
+            So ensure the Staff model is inheriting from UserMixin to get these
+            four attributes
+    """
+    import models
+    from models.staff import Staff
+    staff = models.storage.get(Staff, int(user_id))
+    if staff:
+        return staff
+    else:
+        return None
 
 @app.teardown_appcontext
 def close_db(error):
     """Closes the data"""
+    from console import storage
     storage.close()
 
 @app.errorhandler(404)

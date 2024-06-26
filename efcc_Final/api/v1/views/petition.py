@@ -4,7 +4,7 @@ from flask import (Flask, flash, jsonify, make_response, abort,
                    request, redirect, url_for, render_template)
 from api.v1.views import app_views
 from api.v1.forms import ComplainantForm
-from models import storage
+import models
 from models.base_model import BaseModel
 from models.complainant import Complainant
 from models.petition import Petition
@@ -16,7 +16,7 @@ def get_petitions():
     Retrieves the list of all Petition objects
     """
     form = PetitionForm()
-    all_petitions = storage.all(Petition).values()
+    all_petitions = models.storage.all(Petition).values()
     petitions = []
     for petition in all_petitions:
         petn = petition.to_dict()
@@ -52,7 +52,7 @@ def post_petitions():
 @app_views.route('/petitions/<petition_id>', methods=['GET'], strict_slashes=False)
 def get_petition(petition_id):
     """ Retrieves a specific Petition """
-    petition = storage.get(Petition, petition_id)
+    petition = models.storage.get(Petition, petition_id)
     if not petition:
         abort(404)
 
@@ -66,13 +66,13 @@ def delete_petition(petition_id):
     Deletes a Petition Object
     """
 
-    petition = storage.get(Petition, petition_id)
+    petition = models.storage.get(Petition, petition_id)
 
     if not petition:
         abort(404)
 
-    storage.delete(petition)
-    storage.save()
+    models.storage.delete(petition)
+    models.storage.save()
 
     return make_response(jsonify({}), 200)
 
@@ -82,7 +82,7 @@ def put_petition(petition_id):
     """
     Updates a Petition
     """
-    petition = storage.get(Petition, petition_id)
+    petition = models.storage.get(Petition, petition_id)
 
     if not petition:
         abort(404)
@@ -96,5 +96,5 @@ def put_petition(petition_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(petition, key, value)
-    storage.save()
+    models.storage.save()
     return make_response(jsonify(petition.to_dict()), 200)

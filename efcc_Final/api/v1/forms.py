@@ -8,9 +8,6 @@ from wtforms.validators import (DataRequired, Email, EqualTo,
                                 Length, NumberRange, ValidationError,
                                 URL)
 
-from models.staff import Staff
-from models import storage
-
 id_cards = ('Licence', 'NIN', 'Passport')
 nigeria_skin_colors = ['Dark Brown', 'Brown', 'Light Brown', 'Dark', 'Fair', 'Caramel']
 religion_types = ['Islam', 'Christianity', 'Traditional', 'Others']
@@ -25,6 +22,7 @@ nigeria_states = ("Abia", "Abuja", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi",
                   "Sokoto", "Taraba", "Yobe", "Zamfara")
 
 class ComplainantForm(FlaskForm):
+    "A blueprint for the Complainant form that will be sent to frontend"
     name = StringField('Full Name', validators=[DataRequired(), Length(min=2, max=30)])
     address = StringField('Address', validators=[DataRequired(), Length(max=50)])
     nationality = StringField('Nationality', validators=[DataRequired(), Length(max=50)])
@@ -41,6 +39,7 @@ class ComplainantForm(FlaskForm):
     reset = SubmitField('Reset', render_kw={"type": "reset"})
 
 class PetitionForm(FlaskForm):
+    "A blueprint for the Petition form that will be sent to frontend"
     casefile_no = StringField('Case File No', validators=[DataRequired(), Length(max=50)])
     cr_no = StringField('CR No', validators=[DataRequired(), Length(max=50)])
     date_received = DateTimeField('Date Received', format='%Y-%m-%d %H:%M:%S', default=datetime.now(), validators=[DataRequired()])
@@ -53,6 +52,7 @@ class PetitionForm(FlaskForm):
     reset = SubmitField('Reset', render_kw={"type": "reset"})
 
 class SuspectForm(FlaskForm):
+    "A blueprint for the Suspect form that will be sent to frontend"
     name = StringField('Name', validators=[DataRequired(), Length(max=128)])
     height = IntegerField('Height (cm)', validators=[DataRequired(), NumberRange(min=1, message='Height must be positive')])
     skin_color = SelectField('Skin Color', choices=[(val, val) for val in nigeria_skin_colors], validators=[DataRequired()])
@@ -72,6 +72,7 @@ class SuspectForm(FlaskForm):
     reset = SubmitField('Reset', render_kw={"type": "reset"})
 
 class FingerPrintForm(FlaskForm):
+    "A blueprint for the Finger Print form that will be sent to frontend"
     finger_print = StringField('Fingerprint', validators=[DataRequired(), Length(max=128)])
     mugshot = StringField('Mugshot URL', validators=[DataRequired(), Length(max=128), URL()])
     suspect_id = IntegerField('Suspect ID', validators=[DataRequired(), NumberRange(min=1, message='Suspect ID must be positive')])
@@ -80,6 +81,7 @@ class FingerPrintForm(FlaskForm):
     reset = SubmitField('Reset', render_kw={"type": "reset"})
 
 class IdentityForm(FlaskForm):
+    "A blueprint for the Identity form that will be sent to frontend"
     id_types = SelectField('ID Type', choices=[(val, val) for val in id_cards], validators=[DataRequired()])
     id_number = IntegerField('ID Number', validators=[DataRequired(), NumberRange(min=1, message='ID Number must be positive')])
     suspect_id = IntegerField('Suspect ID', validators=[DataRequired(), NumberRange(min=1, message='Suspect ID must be positive')])
@@ -88,13 +90,14 @@ class IdentityForm(FlaskForm):
     reset = SubmitField('Reset', render_kw={"type": "reset"})
 
 class RegistrationForm(FlaskForm):
+    "A blueprint for the Registration form that will be sent to frontend"
     first_name = StringField('First Name', validators=[DataRequired(), Length(min=2, max=20)])
     last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=60)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     age = IntegerField('Age', validators=[DataRequired(), NumberRange(min=1, message='Age must be positive')])
-    state_of_origin = StringField('State', validators=[Length(max=50)])
+    state_of_origin = SelectField('State', choices=[(val, val) for val in nigeria_states], validators=[DataRequired()])
     submit = SubmitField('Sign Up')
     reset = SubmitField('Clear All', render_kw={"type": "reset"})
 
@@ -103,22 +106,21 @@ class RegistrationForm(FlaskForm):
             First retrieve all the staffs,
             then check if there is a specific staff with that email
         """
+        from models.staff import Staff
+        from console import storage
         # staff = Staff.query.filter_by(email=email.data).first()
         all_staffs = storage.all(Staff).values()
-        the_staff = ''
         for staff in all_staffs:
-            staff_dict = staff.to_dict()
-            if staff_dict['email'] == email.data:
-                the_staff == staff
-        if the_staff:
-            raise ValidationError("That email is taken. Please choose another email!")
+            if staff.to_dict().get('email') == email.data:
+                raise ValidationError("That email is taken. Please choose another email!")
 
     def validate_password(self, password):
         """Check if password is less than 6 digits"""
-        pasw = len(password.data)
-        if pasw < 6:
+        if len(password.data) < 6:
             raise ValidationError("Password can not be less than 6 characters!")
+
 class LoginForm(FlaskForm):
+    "A blueprint for the Login form that will be sent to frontend"
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')

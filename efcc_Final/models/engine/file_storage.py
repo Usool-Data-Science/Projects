@@ -119,3 +119,24 @@ class FileStorage:
                 return
         else:
             return
+    
+    def get_by_feature(self, cls, attribute, value):
+        """Returns an instance with a unique feature"""
+        if cls and attribute:
+            """If the class is provided as a python class instance"""
+            if cls in classes.values() and isinstance(attribute, str):
+                specific_obj = self.all(cls).values()
+                for obj in specific_obj:
+                    if attribute in obj.to_dict() and obj.to_dict().get(attribute) == value:
+                        return obj
+            elif cls in classes and isinstance(attribute, str):
+                """If the class is provided as a string instead of class instance"""
+                cls = eval(cls.title())
+                specific_obj = self.all(cls).values()
+                for obj in specific_obj:
+                    if attribute in obj.to_dict() and obj.to_dict().get(attribute) == value:
+                        return obj
+            else:
+                return
+        else:
+            return

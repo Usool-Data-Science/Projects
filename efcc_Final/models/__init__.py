@@ -10,3 +10,5 @@ else:
     storage = FileStorage()
 
 storage.reload()
+from models.staff import Staff
+newStaff = Staff()

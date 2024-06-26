@@ -3,7 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.complainant import Complainant
 from models.suspect import Suspect
 from models.fingerprint import FingerPrint
@@ -13,8 +13,6 @@ from models.staff import Staff
 from models.recovery import (Monetary, Bank, Crypto, Cash, Recovery,
                              Electronic, Phone, Laptop, Other,
                              Automobile, Jewelry, LandedProperty)
-
-
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
