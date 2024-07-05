@@ -1,0 +1,2 @@
+1. https://medevel.com/35-full-stack-next-js-templates/ (36 Next.js Templates and Starters For Full-stack Development and SaaS Apps)
+2. https://medevel.com/18-nextjs-fullstack-starter/ (18 Open-source and Free Next.js Full-stack Starters For Enterprise and Startups)
