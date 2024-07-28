@@ -1,2 +1,15 @@
 1. https://medevel.com/35-full-stack-next-js-templates/ (36 Next.js Templates and Starters For Full-stack Development and SaaS Apps)
+
 2. https://medevel.com/18-nextjs-fullstack-starter/ (18 Open-source and Free Next.js Full-stack Starters For Enterprise and Startups)
+
+3a. https://github.com/yatunyi15075/Mern-School-Management-System (Mern Stack School Management System with React, Node, MongoDB, Express and Styled Components)
+3b. https://drive.google.com/drive/folders/1BDvRymr1ry_6sECpjshHPgpSFgILGXaE (Assets)
+
+4. https://github.com/Yogndrr?tab=repositories (School and eCommerce MERN projects)
+
+5. https://www.youtube.com/playlist?list=PLEt8Tae2spYkfEYQnKxQ4vrOULAnMI1iF (React + Flask)
+5b. https://github.com/jod35/Flask-React-Recipes
+
+
+# PERFECTLY COMPLETED
+1. https://github.com/Frost-Codes/Flask-Ecommerce/blob/main/requirements.txt(ecommerce_with_flask)
