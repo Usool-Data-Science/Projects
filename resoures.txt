@@ -12,4 +12,5 @@
 
 
 # PERFECTLY COMPLETED
-1. https://github.com/Frost-Codes/Flask-Ecommerce/blob/main/requirements.txt(ecommerce_with_flask)
+1a. https://github.com/Frost-Codes/Flask-Ecommerce/blob/main/requirements.txt(ecommerce_with_flask)
+1b. https://www.youtube.com/watch?v=eDTcSaZcLh4&t=750s (Link to 1a)
